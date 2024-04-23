@@ -1,23 +1,3 @@
-function operate(operator, num1, num2){
-    if(operator == '+'){
-        return num1 + num2;
-    }
-    else if(operator == '-'){
-        return num1 - num2;
-    }
-    else if(operator == '*'){
-        return num1 * num2;
-    }
-    else if(operator == '/'){
-        if(num2 !== 0){
-            return num1 / num2;
-        }
-        else{
-            return 'ERROR';
-        }
-    }
-}
-
 const clearBtn = document.querySelector("#clearBtn");
 const zeroBtn = document.querySelector("#zero");
 const oneBtn = document.querySelector("#one");
@@ -47,15 +27,18 @@ clearBtn.addEventListener("click", function clearScreen(){
     }
 });
 
-function updateScreen(arr){
-    if(typeof arr == "object"){x = convertArrToFloat(arr);}
-    else
+function updateScreen(arr, arr2, op){
+    if(typeof arr == "object"){
+        x = parseFloat(arr.join(""));
+    }
+    if(typeof arr2 == "object"){
+        y = parseFloat(arr2.join(""));
+    }
+    else{
         x = arr;
-    document.querySelector(".display").innerHTML = x;
-}
-
-function convertArrToFloat(arr){
-    return parseFloat(arr.join(""));
+        y = arr2;
+    }
+    document.querySelector(".display").innerHTML = x + op + y;
 }
 
 var current = new Array();
@@ -121,26 +104,26 @@ decimalBtn.addEventListener("click", () => {
 plusBtn.addEventListener("click", function addition(){
     operator = '+';
     if(current.length == 0){
-        total = operate(operator,total,currentInt); 
-        updateScreen(total);
+        total += current;
+        updateScreen(total, current, operator);
     }
     else{
-        currentInt = convertArrToFloat(current);
-        total = operate(operator,total,currentInt); 
-        updateScreen(total);
+        currentInt = parseFloat(current.join(""));
+        total += currentInt; 
+        updateScreen(total, currentInt);
     }
-    current.splice(0,current.length);
+    current.splice(0,current.length, operator);
 });
 
 subtractBtn.addEventListener("click", function subtraction(){
     operator = '-';
     if(current.length == 0){
-        total = operate(operator,total,currentInt); 
+        total -= currentInt; 
         updateScreen(total);
     }
     else{
-        currentInt = convertArrToFloat(current);
-        total = operate(operator,total,currentInt); 
+        currentInt = parseFloat(current.join(""));
+        total -= currentInt; 
         updateScreen(total);
     }
     current.splice(0,current.length);
@@ -149,12 +132,12 @@ subtractBtn.addEventListener("click", function subtraction(){
 divideBtn.addEventListener("click", function division(){
     operator = '/';
     if(current.length == 0){
-        total = operate(operator,total,currentInt); 
+        total /= currentInt; 
         updateScreen(total);
     }
     else{
-        currentInt = convertArrToFloat(current);
-        total = operate(operator,total,currentInt); 
+        currentInt = parseFloat(current.join(""));
+        total /= currentInt; 
         updateScreen(total);
     }
     current.splice(0,current.length);
@@ -163,18 +146,18 @@ divideBtn.addEventListener("click", function division(){
 multiplyBtn.addEventListener("click", function multiplication(){
     operator = '*';
     if(current.length == 0){
-        total = operate(operator,total,currentInt); 
+        total *= currentInt; 
         updateScreen(total);
     }
     else{
-        currentInt = convertArrToFloat(current);
-        total = operate(operator,total,currentInt); 
+        currentInt = parseFloat(current.join(""));
+        total *= currentInt; 
         updateScreen(total);
     }
     current.splice(0,current.length);
 });
 
 equalBtn.addEventListener("click", function equals(){
-    total = operate(operator, total, currentInt);
+    total;
     updateScreen()
 });
