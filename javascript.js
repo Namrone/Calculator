@@ -21,9 +21,9 @@ clearBtn.addEventListener("click", function clearScreen(){
     if(response == "yes" || response == "y"){
         total = 0;
         currentInt = 0;
-        operator = "";
+        operator = null;
         current.splice(0,current.length);
-        updateScreen(total);
+        updateScreen(total, current, operator);
     }
 });
 
@@ -104,12 +104,13 @@ decimalBtn.addEventListener("click", () => {
     updateScreen(total, current, operator);
 });
 
+//Calculates addition of current numbers when + button is clicked
 plusBtn.addEventListener("click", function addition(){
-    operator = '+';
     if(current.length > 0){
+        operator = '+';
         currentInt = parseFloat(current.join(""));
         total += currentInt;
-         current.splice(0,current.length);
+        current.splice(0,current.length);
         updateScreen(total, current, operator);
     }
     else{
@@ -118,48 +119,60 @@ plusBtn.addEventListener("click", function addition(){
     }
 });
 
+//Calculates subtraction of current numbers when - button is clicked
 subtractBtn.addEventListener("click", function subtraction(){
-    operator = '-';
-    if(current.length == 0){
-        total -= currentInt; 
+    if(current.length > 0){
+        currentInt = parseFloat(current.join(""));
+        (operator) ?  total -= currentInt : total = currentInt;
+        current.splice(0,current.length);
+        operator = '-';
         updateScreen(total, current, operator);
     }
     else{
-        currentInt = parseFloat(current.join(""));
         total -= currentInt; 
-        updateScreen(total, current, operator);
+        updateScreen(total, currentInt, operator);
     }
-    current.splice(0,current.length);
 });
 
+//Calculates division of current numbers when / button is clicked
 divideBtn.addEventListener("click", function division(){
-    operator = '/';
-    if(current.length == 0){
-        total /= currentInt; 
-        updateScreen(total);
+    if(current.length > 0){
+        currentInt = parseFloat(current.join(""));
+        if(currentInt == 0){
+            document.querySelector(".display").innerHTML = "ERROR";
+            total = 0;
+            currentInt = 0;
+            operator = null;
+        }
+        else{
+            (operator) ?  total /= currentInt : total = currentInt;
+            operator = '/';
+            updateScreen(total, current, operator);
+        }
+        current.splice(0,current.length);
     }
     else{
-        currentInt = parseFloat(current.join(""));
-        total /= currentInt; 
-        updateScreen(total);
+        total -= currentInt; 
+        updateScreen(total, currentInt, operator);
     }
-    current.splice(0,current.length);
 });
 
+//Calculates multiplication of current numbers when * button is clicked
 multiplyBtn.addEventListener("click", function multiplication(){
-    operator = '*';
-    if(current.length == 0){
-        total *= currentInt; 
-        updateScreen(total);
+    if(current.length > 0){
+        currentInt = parseFloat(current.join(""));
+        (operator) ?  total *= currentInt : total = currentInt;
+        current.splice(0,current.length);
+        operator = '*';
+        updateScreen(total, current, operator);
     }
     else{
-        currentInt = parseFloat(current.join(""));
-        total *= currentInt; 
-        updateScreen(total);
+        total -= currentInt; 
+        updateScreen(total, currentInt, operator);
     }
-    current.splice(0,current.length);
 });
 
+//Calculates the remaining number with the most recent operation clicked
 equalBtn.addEventListener("click", function equals(){
     total;
     updateScreen()
