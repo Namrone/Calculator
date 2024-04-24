@@ -27,18 +27,21 @@ clearBtn.addEventListener("click", function clearScreen(){
     }
 });
 
-function updateScreen(arr, arr2, op){
-    if(typeof arr == "object"){
-        x = parseFloat(arr.join(""));
+function updateScreen(totalNum, currentNum, op){
+    if(typeof currentNum == "object"){
+        if(currentNum.length == 0){
+            y = 0;
+        }
+        else
+            y = parseFloat(currentNum.join(""));
     }
-    if(typeof arr2 == "object"){
-        y = parseFloat(arr2.join(""));
+    else
+        y = currentNum;
+    if(op == null){
+        op = "";
+        totalNum = "";
     }
-    else{
-        x = arr;
-        y = arr2;
-    }
-    document.querySelector(".display").innerHTML = x + op + y;
+    document.querySelector(".display").innerHTML = totalNum + op + y;
 }
 
 var current = new Array();
@@ -48,83 +51,83 @@ var currentInt = 0;
 
 zeroBtn.addEventListener("click", () => {
     current.push('0');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 oneBtn.addEventListener("click", () => {
     current.push('1');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 twoBtn.addEventListener("click", () => {
     current.push('2');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 threeBtn.addEventListener("click", () => {
     current.push('3');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 fourBtn.addEventListener("click", () => {
     current.push('4');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 fiveBtn.addEventListener("click", () => {
     current.push('5');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 sixBtn.addEventListener("click", () => {
     current.push('6');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 sevenBtn.addEventListener("click", () => {
     current.push('7');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 eightBtn.addEventListener("click", () => {
     current.push('8');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 nineBtn.addEventListener("click", () => {
     current.push('9');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 decimalBtn.addEventListener("click", () => {
     current.push('.');
-    updateScreen(current);
+    updateScreen(total, current, operator);
 });
 
 plusBtn.addEventListener("click", function addition(){
     operator = '+';
-    if(current.length == 0){
-        total += current;
+    if(current.length > 0){
+        currentInt = parseFloat(current.join(""));
+        total += currentInt;
+         current.splice(0,current.length);
         updateScreen(total, current, operator);
     }
     else{
-        currentInt = parseFloat(current.join(""));
         total += currentInt; 
-        updateScreen(total, currentInt);
+        updateScreen(total, currentInt, operator);
     }
-    current.splice(0,current.length, operator);
 });
 
 subtractBtn.addEventListener("click", function subtraction(){
     operator = '-';
     if(current.length == 0){
         total -= currentInt; 
-        updateScreen(total);
+        updateScreen(total, current, operator);
     }
     else{
         currentInt = parseFloat(current.join(""));
         total -= currentInt; 
-        updateScreen(total);
+        updateScreen(total, current, operator);
     }
     current.splice(0,current.length);
 });
