@@ -1,17 +1,17 @@
 button{
     height: 100px;
-    width: 100px;
+    width: 105px;
     font-size: 18px;
 }
 
 #clearBtn{
     height: 75px;
-    width: 400px;
+    width: 420px;
 }
 
 .displayContainer{
     height: 100px;
-    width: 400px;
+    width: 420px;
     border: 2px solid black;
     display: flex;
     box-sizing: border-box;
@@ -23,6 +23,8 @@ button{
 .display{
     font-size: 35px;
     font-weight: 400;
+    overflow: visible;
+    overflow-wrap: anywhere;
 }
 
 .firstRow, .secondRow, .thirdRow, .fourthRow{

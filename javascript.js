@@ -104,8 +104,12 @@ nineBtn.addEventListener("click", () => {
 });
 
 decimalBtn.addEventListener("click", () => {
-    current.push('.');
-    updateScreen(total, current, prevOp);
+    if(current.includes(".")){//if current Number already has '.' then does nothing
+    }
+    else{
+        current.push('.');
+        updateScreen(total, current, prevOp);
+    }
 });
 
 plusBtn.addEventListener("click", function (){operate('+');});
@@ -117,20 +121,32 @@ equalBtn.addEventListener("click", function (){operate('=');});
 
 function operate(op){
     if(prevOp == null){
-        total = parseFloat(current.join(""));
-        updateScreen("", total, prevOp);
-        current.splice(0,current.length);
-        prevOp = op;
+        if(current.length == 0){document.querySelector(".display").innerHTML = 0;}
+        else{
+            total = parseFloat(current.join(""));
+            updateScreen("", total, prevOp);
+            current.splice(0,current.length);
+            prevOp = op;
+        }
     }
     else if(op == '='){
         currentInt = parseFloat(current.join(""));
-        (prevOp == '+') ? total += currentInt
-        : (prevOp == '-') ? total -= currentInt
-        : (prevOp == '/') ? total /= currentInt
-        : total *= currentInt;
-        updateScreen("", total, op);
-        current.splice(0,current.length);
-        prevOp = op;
+        if(currentInt == 0 && prevOp == '/'){
+            document.querySelector(".display").innerHTML = "ERROR";
+            total = 0;
+            currentInt = 0;
+            prevOp = null;
+            current.splice(0,current.length);
+        }
+        else{
+            (prevOp == '+') ? total += currentInt
+            : (prevOp == '-') ? total -= currentInt
+            : (prevOp == '/') ? total /= currentInt
+            : total *= currentInt;
+            updateScreen("", total, op);
+            current.splice(0,current.length);
+            prevOp = op;
+        }
     }
     else if(prevOp == '+'){
         if(current.length > 0){
@@ -168,6 +184,7 @@ function operate(op){
                 total = 0;
                 currentInt = 0;
                 prevOp = null;
+                current.splice(0,current.length);
             }
             else{
                 total /= currentInt;
